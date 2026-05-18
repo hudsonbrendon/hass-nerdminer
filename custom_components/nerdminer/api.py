@@ -52,8 +52,6 @@ class NerdMinerApiClient:
                 if resp.status != 200:
                     raise NerdMinerApiError(f"HTTP {resp.status} from Public-Pool")
                 payload: dict[str, Any] = await resp.json()
-        except NerdMinerApiError:
-            raise
         except aiohttp.ClientError as err:
             raise NerdMinerApiError(f"Network error: {err}") from err
         except TimeoutError as err:

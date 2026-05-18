@@ -1,0 +1,30 @@
+{
+    "config": {
+        "step": {
+            "user": {
+                "title": "Adicionar NerdMiner",
+                "description": "Informe seu endereço Bitcoin para acompanhar estatísticas no Public-Pool.",
+                "data": {
+                    "btc_address": "Endereço Bitcoin"
+                }
+            }
+        },
+        "error": {
+            "cannot_connect": "Falha ao contatar API do Public-Pool.",
+            "invalid_address": "Endereço Bitcoin inválido."
+        },
+        "abort": {
+            "already_configured": "Endereço Bitcoin já configurado."
+        }
+    },
+    "options": {
+        "step": {
+            "init": {
+                "title": "Opções do NerdMiner",
+                "data": {
+                    "scan_interval": "Intervalo de atualização (segundos)"
+                }
+            }
+        }
+    }
+}

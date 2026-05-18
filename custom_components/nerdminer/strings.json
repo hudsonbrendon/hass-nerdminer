@@ -1,0 +1,30 @@
+{
+    "config": {
+        "step": {
+            "user": {
+                "title": "Add NerdMiner",
+                "description": "Enter your Bitcoin payout address to track mining stats from Public-Pool.",
+                "data": {
+                    "btc_address": "Bitcoin address"
+                }
+            }
+        },
+        "error": {
+            "cannot_connect": "Failed to reach Public-Pool API.",
+            "invalid_address": "That doesn't look like a valid Bitcoin address."
+        },
+        "abort": {
+            "already_configured": "This Bitcoin address is already configured."
+        }
+    },
+    "options": {
+        "step": {
+            "init": {
+                "title": "NerdMiner options",
+                "data": {
+                    "scan_interval": "Scan interval (seconds)"
+                }
+            }
+        }
+    }
+}
