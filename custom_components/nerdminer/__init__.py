@@ -10,7 +10,7 @@ from .api import NerdMinerApiClient
 from .const import CONF_BTC_ADDRESS, CONF_SCAN_INTERVAL, DEFAULT_SCAN_INTERVAL, DOMAIN
 from .coordinator import NerdMinerCoordinator
 
-PLATFORMS: list[Platform] = []  # Tasks 7-8 will add SENSOR and BINARY_SENSOR
+PLATFORMS: list[Platform] = [Platform.SENSOR]  # Task 8 will add BINARY_SENSOR
 
 
 async def async_setup_entry(hass: HomeAssistant, entry: ConfigEntry) -> bool:
