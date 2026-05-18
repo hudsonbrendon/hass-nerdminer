@@ -1,9 +1,9 @@
 """Tests for NerdMiner config flow."""
-from types import MappingProxyType
 from unittest.mock import AsyncMock, patch
 
 from homeassistant import config_entries, data_entry_flow
 from homeassistant.core import HomeAssistant
+from pytest_homeassistant_custom_component.common import MockConfigEntry
 
 from custom_components.nerdminer.api import NerdMinerApiError, NerdMinerData
 from custom_components.nerdminer.const import (
@@ -62,18 +62,14 @@ async def test_user_flow_invalid_address(hass: HomeAssistant):
 
 
 async def test_options_flow(hass: HomeAssistant):
-    entry = config_entries.ConfigEntry(
-        version=1,
-        minor_version=1,
+    entry = MockConfigEntry(
         domain=DOMAIN,
         title="test",
         data={CONF_BTC_ADDRESS: "bc1qddjxw3ay8yhl0d5a6l8qn8ucdx649et8qkec02"},
-        source=config_entries.SOURCE_USER,
         options={},
         unique_id="bc1qddjxw3ay8yhl0d5a6l8qn8ucdx649et8qkec02",
-        discovery_keys=MappingProxyType({}),
     )
-    hass.config_entries._entries[entry.entry_id] = entry
+    entry.add_to_hass(hass)
 
     result = await hass.config_entries.options.async_init(entry.entry_id)
     assert result["type"] == data_entry_flow.FlowResultType.FORM
