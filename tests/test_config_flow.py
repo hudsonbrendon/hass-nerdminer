@@ -9,7 +9,6 @@ from custom_components.nerdminer.api import NerdMinerApiError, NerdMinerData
 from custom_components.nerdminer.const import (
     CONF_BTC_ADDRESS,
     CONF_SCAN_INTERVAL,
-    DEFAULT_SCAN_INTERVAL,
     DOMAIN,
 )
 

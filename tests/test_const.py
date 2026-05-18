@@ -1,8 +1,8 @@
 from custom_components.nerdminer.const import (
-    DOMAIN,
-    DEFAULT_SCAN_INTERVAL,
     API_BASE_URL,
     CONF_BTC_ADDRESS,
+    DEFAULT_SCAN_INTERVAL,
+    DOMAIN,
 )
 
 

@@ -4,12 +4,12 @@ from unittest.mock import AsyncMock, patch
 from homeassistant.core import HomeAssistant
 from pytest_homeassistant_custom_component.common import MockConfigEntry
 
+from custom_components.nerdminer.api import NerdMinerData
 from custom_components.nerdminer.const import (
-    DOMAIN,
     CONF_BTC_ADDRESS,
     CONF_SCAN_INTERVAL,
+    DOMAIN,
 )
-from custom_components.nerdminer.api import NerdMinerData
 
 
 async def test_setup_and_unload(hass: HomeAssistant):

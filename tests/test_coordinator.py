@@ -1,7 +1,9 @@
 """Tests for DataUpdateCoordinator."""
 from unittest.mock import AsyncMock
+
 import pytest
 from homeassistant.helpers.update_coordinator import UpdateFailed
+
 from custom_components.nerdminer.api import NerdMinerApiError, NerdMinerData
 from custom_components.nerdminer.coordinator import NerdMinerCoordinator
 

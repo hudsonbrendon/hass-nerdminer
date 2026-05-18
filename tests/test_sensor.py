@@ -1,9 +1,11 @@
 """Tests for NerdMiner sensor platform."""
 from unittest.mock import AsyncMock, patch
+
 from homeassistant.core import HomeAssistant
 from pytest_homeassistant_custom_component.common import MockConfigEntry
-from custom_components.nerdminer.const import DOMAIN, CONF_BTC_ADDRESS
+
 from custom_components.nerdminer.api import NerdMinerData, WorkerData
+from custom_components.nerdminer.const import CONF_BTC_ADDRESS, DOMAIN
 
 
 async def _setup_with(hass: HomeAssistant, data: NerdMinerData):

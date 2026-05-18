@@ -1,12 +1,13 @@
 # tests/test_api.py
 from unittest.mock import AsyncMock
+
 import pytest
 from aiohttp import ClientSession
+
 from custom_components.nerdminer.api import (
     NerdMinerApiClient,
     NerdMinerApiError,
     NerdMinerData,
-    WorkerData,
 )
 
 
