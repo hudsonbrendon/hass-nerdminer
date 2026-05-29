@@ -22,9 +22,9 @@ from .const import (
     DOMAIN,
     SENSOR_BEST_DIFFICULTY,
     SENSOR_HASHRATE,
-    SENSOR_SESSION_ACCEPTED,
-    SENSOR_SESSION_DIFFICULTY,
+    SENSOR_LAST_SEEN,
     SENSOR_START_TIME,
+    SENSOR_WORKER_BEST_DIFFICULTY,
     SENSOR_WORKERS_COUNT,
 )
 from .coordinator import NerdMinerCoordinator
@@ -60,6 +60,23 @@ def _first_worker_attr(attr: str, *, scale: float = 1.0):
     return _get
 
 
+def _total_hashrate(data: NerdMinerData) -> float | None:
+    """Sum hashrate across all workers and convert H/s -> kH/s."""
+    if not data.workers:
+        return None
+    return sum(w.hash_rate for w in data.workers) / 1000
+
+
+def _latest_last_seen(data: NerdMinerData) -> datetime | None:
+    """Most recent moment any worker reported to the pool."""
+    stamps = [
+        ts
+        for w in data.workers
+        if (ts := _parse_iso_timestamp(w.last_seen)) is not None
+    ]
+    return max(stamps) if stamps else None
+
+
 SENSOR_DESCRIPTIONS: tuple[NerdMinerSensorDescription, ...] = (
     NerdMinerSensorDescription(
         key=SENSOR_HASHRATE,
@@ -68,7 +85,7 @@ SENSOR_DESCRIPTIONS: tuple[NerdMinerSensorDescription, ...] = (
         native_unit_of_measurement="kH/s",
         state_class=SensorStateClass.MEASUREMENT,
         suggested_display_precision=1,
-        value_fn=_first_worker_attr("hash_rate", scale=1 / 1000),
+        value_fn=_total_hashrate,
     ),
     NerdMinerSensorDescription(
         key=SENSOR_BEST_DIFFICULTY,
@@ -79,19 +96,12 @@ SENSOR_DESCRIPTIONS: tuple[NerdMinerSensorDescription, ...] = (
         value_fn=lambda d: d.best_difficulty,
     ),
     NerdMinerSensorDescription(
-        key=SENSOR_SESSION_ACCEPTED,
-        translation_key=SENSOR_SESSION_ACCEPTED,
-        name="Session accepted",
-        state_class=SensorStateClass.TOTAL_INCREASING,
-        value_fn=_first_worker_attr("session_accepted"),
-    ),
-    NerdMinerSensorDescription(
-        key=SENSOR_SESSION_DIFFICULTY,
-        translation_key=SENSOR_SESSION_DIFFICULTY,
-        name="Session difficulty",
+        key=SENSOR_WORKER_BEST_DIFFICULTY,
+        translation_key=SENSOR_WORKER_BEST_DIFFICULTY,
+        name="Worker best difficulty",
         state_class=SensorStateClass.MEASUREMENT,
-        suggested_display_precision=4,
-        value_fn=_first_worker_attr("session_difficulty"),
+        suggested_display_precision=2,
+        value_fn=_first_worker_attr("best_difficulty"),
     ),
     NerdMinerSensorDescription(
         key=SENSOR_WORKERS_COUNT,
@@ -106,6 +116,13 @@ SENSOR_DESCRIPTIONS: tuple[NerdMinerSensorDescription, ...] = (
         name="Start time",
         device_class=SensorDeviceClass.TIMESTAMP,
         value_fn=lambda d: _parse_iso_timestamp(d.workers[0].start_time) if d.workers else None,
+    ),
+    NerdMinerSensorDescription(
+        key=SENSOR_LAST_SEEN,
+        translation_key=SENSOR_LAST_SEEN,
+        name="Last seen",
+        device_class=SensorDeviceClass.TIMESTAMP,
+        value_fn=_latest_last_seen,
     ),
 )
 
