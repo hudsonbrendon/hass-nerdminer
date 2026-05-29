@@ -26,5 +26,18 @@
                 }
             }
         }
+    },
+    "entity": {
+        "sensor": {
+            "hashrate": { "name": "Hashrate" },
+            "best_difficulty": { "name": "Best difficulty" },
+            "worker_best_difficulty": { "name": "Worker best difficulty" },
+            "workers_count": { "name": "Workers count" },
+            "start_time": { "name": "Start time" },
+            "last_seen": { "name": "Last seen" }
+        },
+        "binary_sensor": {
+            "online": { "name": "Online" }
+        }
     }
 }
