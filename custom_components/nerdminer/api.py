@@ -18,15 +18,14 @@ class NerdMinerApiError(Exception):
 
 @dataclass
 class WorkerData:
-    """Single worker stats."""
+    """Single worker stats as returned by Public-Pool."""
 
     session_id: str
     name: str
     hash_rate: float
     start_time: str
     best_difficulty: float
-    session_difficulty: float
-    session_accepted: int
+    last_seen: str
 
 
 @dataclass
@@ -66,11 +65,10 @@ class NerdMinerApiClient:
             WorkerData(
                 session_id=w.get("sessionId", ""),
                 name=w.get("name", ""),
-                hash_rate=float(w.get("hashRate", 0)),
+                hash_rate=float(w.get("hashRate", 0) or 0),
                 start_time=w.get("startTime", ""),
                 best_difficulty=float(w.get("bestDifficulty", 0) or 0),
-                session_difficulty=float(w.get("sessionDifficulty", 0) or 0),
-                session_accepted=int(w.get("sessionAccepted", 0) or 0),
+                last_seen=w.get("lastSeen", ""),
             )
             for w in payload.get("workers", [])
         ]
