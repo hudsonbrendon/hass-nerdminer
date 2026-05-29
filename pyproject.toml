@@ -1,6 +1,6 @@
 [project]
 name = "hass-nerdminer"
-version = "0.1.0"
+version = "0.2.0"
 description = "Home Assistant integration for NerdMiner V2 via Public-Pool API"
 requires-python = ">=3.12"
 license = { text = "MIT" }
