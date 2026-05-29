@@ -1,0 +1,15 @@
+{
+    "entity": {
+        "sensor": {
+            "hashrate": { "default": "mdi:pickaxe" },
+            "best_difficulty": { "default": "mdi:trophy" },
+            "worker_best_difficulty": { "default": "mdi:medal" },
+            "workers_count": { "default": "mdi:server-network" },
+            "start_time": { "default": "mdi:clock-start" },
+            "last_seen": { "default": "mdi:clock-check" }
+        },
+        "binary_sensor": {
+            "online": { "default": "mdi:lan-connect", "state": { "off": "mdi:lan-disconnect" } }
+        }
+    }
+}

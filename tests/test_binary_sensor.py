@@ -26,7 +26,7 @@ async def _setup(hass, data):
 async def test_online_when_worker_active(hass: HomeAssistant):
     worker = WorkerData(
         session_id="s", name="w", hash_rate=1, start_time="",
-        best_difficulty=0, session_difficulty=0, session_accepted=0,
+        best_difficulty=0, last_seen="",
     )
     await _setup(hass, NerdMinerData(best_difficulty=0, workers_count=1, workers=[worker]))
     state = hass.states.get("binary_sensor.nerdminer_bc1qtest_online")

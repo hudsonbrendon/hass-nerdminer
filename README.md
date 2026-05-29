@@ -16,7 +16,7 @@ NerdMiner V2 is a solo Bitcoin "lottery" miner — it tries to find a block on i
 
 ## Features
 
-- **6 sensors**: hashrate, best difficulty, session shares accepted, session difficulty, workers count, session start time
+- **6 sensors**: hashrate (summed across workers), account best difficulty, worker best difficulty, workers count, session start time, last seen
 - **1 binary sensor**: online/offline (connectivity device class)
 - **UI config flow** — no YAML required
 - **Options flow** — adjust polling interval (10-3600 seconds)
@@ -63,13 +63,15 @@ To change the polling interval afterwards: **Settings** → **Devices & Services
 
 | Entity | Type | Description |
 |--------|------|-------------|
-| `sensor.nerdminer_<addr>_hashrate` | Sensor | Current hashrate in kH/s |
-| `sensor.nerdminer_<addr>_best_difficulty` | Sensor | Best difficulty ever found by this address |
-| `sensor.nerdminer_<addr>_session_accepted` | Sensor | Shares accepted in the current session |
-| `sensor.nerdminer_<addr>_session_difficulty` | Sensor | Current pool difficulty |
+| `sensor.nerdminer_<addr>_hashrate` | Sensor | Total hashrate across all workers, in kH/s |
+| `sensor.nerdminer_<addr>_best_difficulty` | Sensor | Best difficulty ever found by this address (account-wide) |
+| `sensor.nerdminer_<addr>_worker_best_difficulty` | Sensor | Highest current-session best difficulty among connected workers |
 | `sensor.nerdminer_<addr>_workers_count` | Sensor | Active workers reporting to the pool |
 | `sensor.nerdminer_<addr>_start_time` | Sensor (timestamp) | When the current mining session started |
+| `sensor.nerdminer_<addr>_last_seen` | Sensor (timestamp) | Most recent time any worker reported to the pool |
 | `binary_sensor.nerdminer_<addr>_online` | Binary | `on` when at least one worker is reporting |
+
+> Public-Pool's API does not expose accepted-share counts or per-share session difficulty, so those are not available as sensors.
 
 ## Example automations
 
@@ -118,7 +120,7 @@ automation:
         data:
           message: >
             Hashrate: {{ states('sensor.nerdminer_<addr>_hashrate') }} kH/s ·
-            Shares: {{ states('sensor.nerdminer_<addr>_session_accepted') }} ·
+            Workers: {{ states('sensor.nerdminer_<addr>_workers_count') }} ·
             Best: {{ states('sensor.nerdminer_<addr>_best_difficulty') }}
 ```
 
@@ -134,12 +136,16 @@ entities:
     name: Status
   - entity: sensor.nerdminer_<addr>_hashrate
     name: Hashrate
-  - entity: sensor.nerdminer_<addr>_session_accepted
-    name: Shares (session)
+  - entity: sensor.nerdminer_<addr>_workers_count
+    name: Workers
   - entity: sensor.nerdminer_<addr>_best_difficulty
     name: Best difficulty
+  - entity: sensor.nerdminer_<addr>_worker_best_difficulty
+    name: Worker best difficulty
   - entity: sensor.nerdminer_<addr>_start_time
     name: Session start
+  - entity: sensor.nerdminer_<addr>_last_seen
+    name: Last seen
 ```
 
 ## Limitations
