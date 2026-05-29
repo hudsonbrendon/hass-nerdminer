@@ -14,6 +14,7 @@ from homeassistant.components.sensor import (
 from homeassistant.config_entries import ConfigEntry
 from homeassistant.core import HomeAssistant
 from homeassistant.helpers.entity_platform import AddEntitiesCallback
+from homeassistant.helpers.typing import StateType
 from homeassistant.helpers.update_coordinator import CoordinatorEntity
 
 from .api import NerdMinerData
@@ -34,7 +35,7 @@ from .coordinator import NerdMinerCoordinator
 class NerdMinerSensorDescription(SensorEntityDescription):
     """Describes a NerdMiner sensor."""
 
-    value_fn: Callable[[NerdMinerData], float | int | str | None]
+    value_fn: Callable[[NerdMinerData], StateType | datetime]
 
 
 def _parse_iso_timestamp(value: str | None) -> datetime | None:
@@ -47,17 +48,6 @@ def _parse_iso_timestamp(value: str | None) -> datetime | None:
         return datetime.fromisoformat(normalized)
     except (ValueError, AttributeError):
         return None
-
-
-def _first_worker_attr(attr: str, *, scale: float = 1.0):
-    def _get(data: NerdMinerData) -> float | int | str | None:
-        if not data.workers:
-            return None
-        value = getattr(data.workers[0], attr)
-        if scale != 1.0 and isinstance(value, (int, float)):
-            return value * scale
-        return value
-    return _get
 
 
 def _total_hashrate(data: NerdMinerData) -> float | None:
@@ -75,6 +65,13 @@ def _latest_last_seen(data: NerdMinerData) -> datetime | None:
         if (ts := _parse_iso_timestamp(w.last_seen)) is not None
     ]
     return max(stamps) if stamps else None
+
+
+def _best_worker_difficulty(data: NerdMinerData) -> float | None:
+    """Highest current-session best difficulty among connected workers."""
+    if not data.workers:
+        return None
+    return max(w.best_difficulty for w in data.workers)
 
 
 SENSOR_DESCRIPTIONS: tuple[NerdMinerSensorDescription, ...] = (
@@ -101,7 +98,7 @@ SENSOR_DESCRIPTIONS: tuple[NerdMinerSensorDescription, ...] = (
         name="Worker best difficulty",
         state_class=SensorStateClass.MEASUREMENT,
         suggested_display_precision=2,
-        value_fn=_first_worker_attr("best_difficulty"),
+        value_fn=_best_worker_difficulty,
     ),
     NerdMinerSensorDescription(
         key=SENSOR_WORKERS_COUNT,
@@ -162,5 +159,5 @@ class NerdMinerSensor(CoordinatorEntity[NerdMinerCoordinator], SensorEntity):
         }
 
     @property
-    def native_value(self) -> float | int | str | None:
+    def native_value(self) -> StateType | datetime:
         return self.entity_description.value_fn(self.coordinator.data)

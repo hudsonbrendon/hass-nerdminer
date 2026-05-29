@@ -65,7 +65,7 @@ To change the polling interval afterwards: **Settings** → **Devices & Services
 |--------|------|-------------|
 | `sensor.nerdminer_<addr>_hashrate` | Sensor | Total hashrate across all workers, in kH/s |
 | `sensor.nerdminer_<addr>_best_difficulty` | Sensor | Best difficulty ever found by this address (account-wide) |
-| `sensor.nerdminer_<addr>_worker_best_difficulty` | Sensor | Best difficulty of the first worker's current session |
+| `sensor.nerdminer_<addr>_worker_best_difficulty` | Sensor | Highest current-session best difficulty among connected workers |
 | `sensor.nerdminer_<addr>_workers_count` | Sensor | Active workers reporting to the pool |
 | `sensor.nerdminer_<addr>_start_time` | Sensor (timestamp) | When the current mining session started |
 | `sensor.nerdminer_<addr>_last_seen` | Sensor (timestamp) | Most recent time any worker reported to the pool |
