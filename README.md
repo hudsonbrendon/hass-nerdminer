@@ -1,8 +1,17 @@
+<p align="center">
+  <img src="custom_components/nerdminer/brand/icon@2x.png" alt="NerdMiner" height="128">
+</p>
+
 # NerdMiner — Home Assistant Integration
 
-[![tests](https://github.com/hudsonbrendon/hass-nerdminer/actions/workflows/tests.yml/badge.svg)](https://github.com/hudsonbrendon/hass-nerdminer/actions/workflows/tests.yml)
-[![hacs](https://img.shields.io/badge/HACS-Custom-orange.svg)](https://hacs.xyz)
-[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
+[![Tests](https://github.com/hudsonbrendon/hass-nerdminer/actions/workflows/tests.yml/badge.svg)](https://github.com/hudsonbrendon/hass-nerdminer/actions/workflows/tests.yml)
+[![Hassfest](https://github.com/hudsonbrendon/hass-nerdminer/actions/workflows/hassfest.yml/badge.svg)](https://github.com/hudsonbrendon/hass-nerdminer/actions/workflows/hassfest.yml)
+[![HACS](https://github.com/hudsonbrendon/hass-nerdminer/actions/workflows/validate.yml/badge.svg)](https://github.com/hudsonbrendon/hass-nerdminer/actions/workflows/validate.yml)
+[![Release](https://img.shields.io/github/v/release/hudsonbrendon/hass-nerdminer?sort=semver)](https://github.com/hudsonbrendon/hass-nerdminer/releases)
+[![Downloads](https://img.shields.io/github/downloads/hudsonbrendon/hass-nerdminer/total)](https://github.com/hudsonbrendon/hass-nerdminer/releases)
+[![HACS Custom](https://img.shields.io/badge/HACS-Custom-41BDF5.svg)](https://hacs.xyz/)
+[![Home Assistant](https://img.shields.io/badge/Home%20Assistant-2024.6.0%2B-18BCF2?logo=homeassistant&logoColor=white)](https://www.home-assistant.io/)
+[![License](https://img.shields.io/github/license/hudsonbrendon/hass-nerdminer)](LICENSE)
 
 Track your [NerdMiner V2](https://github.com/BitMaker-hub/NerdMiner_v2) solo Bitcoin miner stats in Home Assistant via the [Public-Pool](https://web.public-pool.io) API.
 
@@ -24,6 +33,9 @@ NerdMiner V2 is a solo Bitcoin "lottery" miner — it tries to find a block on i
 - **HACS-ready**
 
 ## Installation
+
+[![Open in HACS](https://my.home-assistant.io/badges/hacs_repository.svg)](https://my.home-assistant.io/redirect/hacs_repository/?owner=hudsonbrendon&repository=hass-nerdminer&category=integration)
+[![Add integration](https://my.home-assistant.io/badges/config_flow_start.svg)](https://my.home-assistant.io/redirect/config_flow_start/?domain=nerdminer)
 
 ### HACS (recommended)
 
